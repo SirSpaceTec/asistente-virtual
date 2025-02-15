@@ -1,0 +1,53 @@
+# Archivos y carpetas generados por Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Entornos virtuales
+venv/
+env/
+*.env
+*.venv
+
+# Archivos de configuración o variables sensibles
+.env
+.env.*
+
+# Dependencias instaladas (si no estás usando un archivo requirements.txt)
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Archivos de desarrollo o debugging
+*.log
+*.sqlite3
+*.db
+*.bak
+*.swp
+*.tmp
+*.out
+*.pid
+
+# Archivos de test
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+htmlcov/
+
+# Archivos de IDEs o editores
+.vscode/
+.idea/
+*.iml
+
+# Archivos creados por Jupyter
+.ipynb_checkpoints/
+
+# Documentación generada automáticamente
+build/
+dist/
+*.egg-info/
+*.eggs/
+
+# Otros archivos generados
+.DS_Store
+Thumbs.db
