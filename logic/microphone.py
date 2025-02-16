@@ -18,6 +18,8 @@ def input_microphone():
           if text.lower() == "apagar asistente":
             print("Apagando asistente")
             break
+          # Comprobar si la interacción del usuario es una orden o una pregunta
+          
           simular_respuesta_model(text)
           print("Respuesta terminada")
         except sr.WaitTimeoutError:
