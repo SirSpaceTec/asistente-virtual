@@ -58,4 +58,4 @@ def simular_respuesta_model(question = ""):
   respuesta_simulada = "Esta es la respuesta del GPT simulado"
   return respuesta_simulada
 
-generate_short_response("Explicame la balanza de pagos")
+# generate_short_response("Explicame la balanza de pagos")

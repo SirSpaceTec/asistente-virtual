@@ -1,6 +1,6 @@
 import speech_recognition as sr
-from logic.modelAi import simular_respuesta_model
-
+from logic.model_ai import simular_respuesta_model
+from config.py_to_c import interactionOrOrder
 def input_microphone():
   count = 0
   r = sr.Recognizer()
@@ -15,13 +15,12 @@ def input_microphone():
           text = r.recognize_google(audio, language="es-ES")
           print(text)
           count = 0
-          if text.lower() == "apagar asistente":
-            print("Apagando asistente")
-            break
           # Comprobar si la interacción del usuario es una orden o una pregunta
-          
+          intOrOrd = interactionOrOrder(text)
+          if intOrOrd == "order":
+            # recibir la orden y gestionar comportamiento del software desde aquí?
+            break
           simular_respuesta_model(text)
-          print("Respuesta terminada")
         except sr.WaitTimeoutError:
           print("I haven't heard anything")
         except sr.UnknownValueError:
