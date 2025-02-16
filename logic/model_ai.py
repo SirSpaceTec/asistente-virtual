@@ -4,6 +4,8 @@ import os
 import tiktoken
 import time
 
+from logic.speaker import speak_text
+
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY") 
 
@@ -31,7 +33,7 @@ def generate_short_response(question):
       top_p=0.9
   )
   tokens_sent = count_tokens(messages)
-  print(f"Tokens enviados: {tokens_sent}")
+  # print(f"Tokens enviados: {tokens_sent}")
   
   response_text = ""
   for chunk in stream:
@@ -39,12 +41,14 @@ def generate_short_response(question):
       print(chunk.choices[0].delta.content, end="", flush=True)
       response_text += chunk.choices[0].delta.content
       
+  speak_text(response_text)
+      
   tokens_received = len(tiktoken.encoding_for_model("gpt-4o-mini").encode(response_text))
   total_tokens_used = tokens_sent + tokens_received
     
   total_tokens_global += total_tokens_used
-  print(f"\nTokens utilizados en esta consulta: {total_tokens_used}")
-  print(f"Tokens totales acumulados: {total_tokens_global}") 
+  # print(f"\nTokens utilizados en esta consulta: {total_tokens_used}")
+  # print(f"Tokens totales acumulados: {total_tokens_global}") 
   
   
   
@@ -57,5 +61,3 @@ def simular_respuesta_model(question = ""):
   print("\n")
   respuesta_simulada = "Esta es la respuesta del GPT simulado"
   return respuesta_simulada
-
-# generate_short_response("Explicame la balanza de pagos")
