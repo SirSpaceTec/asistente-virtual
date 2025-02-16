@@ -4,13 +4,13 @@ import speech_recognition as sr
 def input_microphone():
   count = 0
   r = sr.Recognizer()
-  
   with sr.Microphone() as source:
+    r.pause_threshold = 2
+    r.adjust_for_ambient_noise(source, duration=1)
     while True:
       print(f"Say something, count {count}")
-      r.adjust_for_ambient_noise(source, duration=1)
-      audio = r.listen(source, timeout=5)
       try:
+        audio = r.listen(source, timeout=4)
         text = r.recognize_google(audio, language="es-ES")
         print(text)
         count = 0
@@ -24,3 +24,6 @@ def input_microphone():
         count += 1
         if count == 3:
           break
+        
+        
+        
