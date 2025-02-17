@@ -51,14 +51,3 @@ def generate_short_response(question):
   # print(f"\nTokens utilizados en esta consulta: {total_tokens_used}")
   # print(f"Tokens totales acumulados: {total_tokens_global}") 
   
-  
-  
-def simular_respuesta_model(question = ""):
-  
-  print("Procesando respuesta...")
-  for i in range(3,0,-1):
-    print(f"{i}...", end="", flush=True)
-    time.sleep(1)
-  print("\n")
-  respuesta_simulada = "Esta es la respuesta del GPT simulado"
-  return respuesta_simulada
