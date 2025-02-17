@@ -20,7 +20,7 @@ def count_tokens(messages, model="gpt-4o-mini"):
 def generate_short_response(question):
   global total_tokens_global
   messages=[
-        {"role": "system", "content": "Responde breve y preciso. Actúa como un amigo vacilón y gracioso, que siempre responde con humor, juegos de palabras y un toque de sarcasmo amable."},
+        {"role": "system", "content": "Responde con frases cortas, máximo tres oraciones. Sé directo y conciso."},
         {"role": "user", "content": question}
         ]
   
@@ -29,8 +29,9 @@ def generate_short_response(question):
       messages=messages,
       stream=True,
       max_tokens=100,
-      temperature=0.8,
-      top_p=0.9
+      temperature=0.3,
+      top_p=0.9,
+      stop=["\n"]
   )
   tokens_sent = count_tokens(messages)
   # print(f"Tokens enviados: {tokens_sent}")

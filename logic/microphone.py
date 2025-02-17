@@ -1,5 +1,5 @@
 import speech_recognition as sr
-from logic.model_ai import simular_respuesta_model, generate_short_response
+from logic.model_ai import generate_short_response
 from config.py_to_c import interactionOrOrder
 
 apagar = ["apagar", "apagar asistente", "apágate"]
@@ -10,12 +10,14 @@ def input_microphone():
   r = sr.Recognizer()
   try:
     with sr.Microphone() as source:
-      r.pause_threshold = 2
-      r.adjust_for_ambient_noise(source, duration=1)
+      r.adjust_for_ambient_noise(source, duration=2)
+      r.pause_threshold = 0.8
+      r.energy_threshold = 300
+      r.dynamic_energy_threshold = False
       while True:
-        print(f"Say something")
+        print(f"Di algo...")
         try:
-          audio = r.listen(source, timeout=4)
+          audio = r.listen(source, timeout=8)
           text = r.recognize_google(audio, language="es-ES")
           print(text)
           count = 0
@@ -29,9 +31,9 @@ def input_microphone():
             generate_short_response(text)
 
         except sr.WaitTimeoutError:
-          print("I haven't heard anything")
+          print("No escuché nada.")
         except sr.UnknownValueError:
-          print("I couldn't understand the audio")
+          print("No entendí el audio.")
           count += 1
           if count == 3:
             break
