@@ -25,7 +25,7 @@ def input_microphone():
           if text.lower() in apagar:
             break
 
-          intOrOrd = interactionOrOrder(text)
+          intOrOrd = interactionOrOrder(text.lower())
 
           if intOrOrd == "interaction":
             generate_short_response(text)

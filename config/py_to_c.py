@@ -1,12 +1,7 @@
-
+from logic.command_control import execute_command
 
 orders = []
 
 def interactionOrOrder(text):
-  if text.lower() in orders:
-    # Logica para enviar orden a C
-    
-    
-    return "order"
-  else:
-    return "interaction"
+  return execute_command(text)
+
