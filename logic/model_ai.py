@@ -5,7 +5,8 @@ import tiktoken
 import time
 
 from logic.speaker import speak_text
-
+  
+  
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY") 
 
