@@ -3,25 +3,19 @@ import os
 import webbrowser
 import time
 import pyautogui
-
 import shutil
 import winreg
+import json
 
-# Diccionario de comandos y sus aplicaciones correspondientes
-commands = {
-  "abrir chrome": "chrome",
-  "abrir firefox": "firefox",
-  "abrir notepad": "notepad",
-  "abrir spotify": "spotify",
-  "abrir visual studio": "code",
-  "abrir calculadora": "calc" if os.name == "nt" else "gnome-calculator"
-}
+control_verbs = ["pon", "ponme", "poner", "abrir", "abre", "ábreme"]
 
-pseudo_commands = {
-  "pon música": "play_spotify_playlist",
-  "abre google": "https://www.google.com",
-  "abre youtube": "https://www.youtube.com",
-}
+def load_commands():
+  with open("commands.json", "r", encoding="utf-8") as file:
+    return json.load(file)
+  
+data = load_commands()
+commands = data.get("commands", {})
+pseudo_commands = data.get("pseudo_commands", {})
 
 # Windows
 def find_program_path(app_name):
@@ -49,21 +43,27 @@ def execute_program(command):
   return False
 
 def execute_command(command):
-  if command in commands:
-    if execute_program(commands[command]):
-      return "order"
-    else:
-      print(f"No se pudo ejecutar {command}. Verifica la instalación del programa.")
-  elif command in pseudo_commands:
-    try:
-      action = pseudo_commands[command]  # Obtiene la función o lambda
-      if "abre" in command:
-        open_browser(action)
-      elif action in globals():  # Verifica si el método existe en el contexto global
-        globals()[action]()  # Llama a la función dinámicamente
-      return "order"  
-    except Exception as e:
-      print(f"Error al ejecutar {command}: {e}")
+  words = command.lower().split()
+  found_verb = None
+  found_command = None
+  
+  for word in words:
+    if word in control_verbs and found_verb is None:
+      found_verb = word
+    elif word in commands or word in pseudo_commands:
+      found_command = word
+      break
+    
+  if found_verb and found_command:
+    if found_command in commands:      
+      execute_program(commands[command])
+    elif found_command in pseudo_commands:
+        action = pseudo_commands[found_command]  
+        if action.startswith("http"):
+          open_browser(action)
+        elif action in globals():  # Verifica si el método existe en el contexto global
+          globals()[action]()  # Llama a la función dinámicamente
+    return "order"    
   else:
     return "interaction"
       
@@ -79,12 +79,6 @@ def play_spotify_playlist(playlist_id = "37i9dQZF1DXcBWIGoYBM5M"):
     time.sleep(3)
     pyautogui.press("space")
 
-    # if execute_program("spotify"):
-        # subprocess.Popen("spotify")
-        # time.sleep(3)
-        # pyautogui.press("space")
-    # else:
-        # print("Spotify no encontrado o no se pudo ejecutar.")
 
 def open_browser(link):
   webbrowser.open_new_tab(link)

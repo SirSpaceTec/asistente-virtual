@@ -20,17 +20,14 @@ def speak_text(text, lang="es", speed=1.3):
     # Convertir el archivo MP3 a un objeto de audio de Pydub
     audio = AudioSegment.from_mp3(mp3_file)
 
-    # Cambiar la velocidad del audio
     adjusted_audio = change_audio_speed(audio, speed=speed)
 
     # Exportar el audio ajustado a un archivo temporal
     adjusted_audio_file = "adjusted_response.wav"
     adjusted_audio.export(adjusted_audio_file, format="wav")
 
-    # Reproducir el archivo de audio ajustado
     play(adjusted_audio)
 
-    # Limpiar los archivos temporales
     os.remove(mp3_file)
     os.remove(adjusted_audio_file)
 

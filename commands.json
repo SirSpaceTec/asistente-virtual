@@ -1,0 +1,15 @@
+{
+  "commands": {
+    "chrome": "chrome",
+    "firefox": "firefox",
+    "notepad": "notepad",
+    "spotify": "spotify",
+    "visual studio": "code",
+    "calculadora": "calc"
+  },
+  "pseudo_commands": {
+    "música": "play_spotify_playlist",
+    "google": "https://www.google.com",
+    "youtube": "https://www.youtube.com"
+  }
+}
