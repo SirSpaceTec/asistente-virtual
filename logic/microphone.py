@@ -2,8 +2,25 @@ import speech_recognition as sr
 from logic.model_ai import generate_short_response
 from config.py_to_c import interactionOrOrder
 
+wake_words = ["hey asistente", "asistente"]
+
 apagar = ["apagar", "apagar asistente", "apágate"]
 
+def listen_for_wake_word(recognizer, source):
+  print("Esperando palabra clave para activación...")
+  
+  while True:
+    try:
+      audio = recognizer.listen(source, timeout=8)
+      text = recognizer.recognize_google(audio, language="es-ES").lower()
+      if any(wake_word in text for wake_word in wake_words):
+        print("asistente activado")
+        return True
+    except sr.WaitTimeoutError:
+            print("No escuché nada.")
+    except sr.UnknownValueError:
+            print("No entendí el audio.")
+  return False
 
 def input_microphone():
   count = 0
@@ -14,6 +31,11 @@ def input_microphone():
       r.pause_threshold = 0.8
       r.energy_threshold = 300
       r.dynamic_energy_threshold = False
+      
+      # Esperar hasta que se escuche la palabra de activación
+      if not listen_for_wake_word(r, source):
+          return
+              
       while True:
         print(f"Di algo...")
         try:
