@@ -1,8 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
-import tiktoken
-import time
 
 from logic.speaker import speak_text
   
@@ -13,10 +11,6 @@ api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=api_key)
 
 total_tokens_global = 0
-
-# def count_tokens(messages, model="gpt-4o-mini"):
-#   encoder = tiktoken.encoding_for_model(model)
-#   return sum(len(encoder.encode(message["content"])) for message in messages)
 
 def generate_short_response(question):
   global total_tokens_global
@@ -34,8 +28,6 @@ def generate_short_response(question):
       top_p=0.9,
       stop=["\n"]
   )
-  # tokens_sent = count_tokens(messages)
-  # print(f"Tokens enviados: {tokens_sent}")
   
   response_text = ""
   for chunk in stream:
@@ -44,11 +36,4 @@ def generate_short_response(question):
       response_text += chunk.choices[0].delta.content
       
   speak_text(response_text)
-      
-  # tokens_received = len(tiktoken.encoding_for_model("gpt-4o-mini").encode(response_text))
-  # total_tokens_used = tokens_sent + tokens_received
-    
-  # total_tokens_global += total_tokens_used
-  # print(f"\nTokens utilizados en esta consulta: {total_tokens_used}")
-  # print(f"Tokens totales acumulados: {total_tokens_global}") 
   

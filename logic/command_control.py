@@ -1,5 +1,4 @@
 import subprocess
-import os
 import webbrowser
 import time
 import pyautogui
