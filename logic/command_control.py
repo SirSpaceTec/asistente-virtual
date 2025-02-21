@@ -1,10 +1,11 @@
 import subprocess
 import webbrowser
-import time
-import pyautogui
 import shutil
 import winreg
 import json
+
+# importaciones para utilizar en el globals()
+from logic.services.init_services import *
 
 control_verbs = ["pon", "ponme", "poner", "abrir", "abre", "ábreme"]
 
@@ -41,8 +42,8 @@ def execute_program(command):
       print(f"Error al ejecutar {command}: {e}")
   return False
 
-def execute_command(command):
-  words = command.lower().split()
+def execute_command(text):
+  words = text.lower().split()
   found_verb = None
   found_command = None
   
@@ -55,7 +56,7 @@ def execute_command(command):
     
   if found_verb and found_command:
     if found_command in commands:      
-      execute_program(commands[command])
+      execute_program(commands[text])
     elif found_command in pseudo_commands:
         action = pseudo_commands[found_command]  
         if action.startswith("http"):
@@ -65,18 +66,6 @@ def execute_command(command):
     return "order"    
   else:
     return "interaction"
-      
-      
-      
-def play_spotify_playlist(playlist_id = "37i9dQZF1DXcBWIGoYBM5M"):
-    """
-    Abre una playlist de Spotify usando su ID.
-    """
-    url = f"https://open.spotify.com/playlist/{playlist_id}"
-    webbrowser.open(url) 
-
-    time.sleep(3)
-    pyautogui.press("space")
 
 
 def open_browser(link):

@@ -1,6 +1,6 @@
 import speech_recognition as sr
 from logic.model_ai import generate_short_response
-from config.py_to_c import interactionOrOrder
+from logic.command_control import execute_command
 
 wake_words = ["hey asistente", "asistente"]
 
@@ -47,7 +47,7 @@ def input_microphone():
           if text.lower() in apagar:
             break
 
-          intOrOrd = interactionOrOrder(text.lower())
+          intOrOrd = execute_command(text.lower())
 
           if intOrOrd == "interaction":
             generate_short_response(text)
