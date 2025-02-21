@@ -17,10 +17,11 @@ def listen_for_wake_word(recognizer, source):
         print("asistente activado")
         return True
     except sr.WaitTimeoutError:
-            print("No escuché nada.")
+      print("No escuché nada.")
     except sr.UnknownValueError:
-            print("No entendí el audio.")
-  return False
+      print("No entendí el audio.")
+
+
 
 def input_microphone():
   count = 0
@@ -59,11 +60,12 @@ def input_microphone():
           count += 1
           if count == 3:
             break
+ 
   except OSError as e:
-      print(f"Error de micrófono: {e}")
-      print("Intenta reconectar tu micrófono o verifica la configuración del sistema.")
+    print(f"Error de micrófono: {e}")
+    print("Intenta reconectar tu micrófono o verifica la configuración del sistema.")
   except Exception as e:
-      print(f"Ocurrió un error inesperado: {e}")
+    print(f"Ocurrió un error inesperado: {e}")
         
         
         
