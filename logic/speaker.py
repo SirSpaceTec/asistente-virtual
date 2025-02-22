@@ -4,12 +4,19 @@ from pydub.playback import play
 import os
 from dotenv import load_dotenv
 import sys
+import subprocess
 
 load_dotenv()
 PATH_FFMPEG = os.getenv("PATH_FFMPEG")
 
 if PATH_FFMPEG:
     AudioSegment.converter = PATH_FFMPEG
+
+def play_audio_mac(file_path):
+    try:
+        subprocess.run(["afplay", file_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print("Error reproduciendo el audio:", e)
 
 def change_audio_speed(audio, speed=1.5):
     new_audio = audio._spawn(audio.raw_data, overrides={
@@ -28,9 +35,10 @@ def speak_text(text, lang="es", speed=1.3):
 
     adjusted_audio_file = "adjusted_response.wav"
     adjusted_audio.export(adjusted_audio_file, format="wav")
-    #TODO: Implementar audio para macOS, por ahora solamente para windows
-    if sys.platform.startswith("win"):
-        play(adjusted_audio) # <-- TODO: En macOS da error. Corregir 
+    if sys.platform.startswith("win"): #windows
+        play(adjusted_audio)
+    elif sys.platform.startswith("darwin"): #macOS
+        play_audio_mac(adjusted_audio_file)
 
     os.remove(mp3_file)
     os.remove(adjusted_audio_file)
