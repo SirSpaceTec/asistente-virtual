@@ -3,6 +3,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 import os
 from dotenv import load_dotenv
+import sys
 
 load_dotenv()
 PATH_FFMPEG = os.getenv("PATH_FFMPEG")
@@ -27,9 +28,9 @@ def speak_text(text, lang="es", speed=1.3):
 
     adjusted_audio_file = "adjusted_response.wav"
     adjusted_audio.export(adjusted_audio_file, format="wav")
-
-    play_obj = play(adjusted_audio)
-    play_obj.wait_done()
+    #TODO: Implementar audio para macOS, por ahora solamente para windows
+    if sys.platform.startswith("win"):
+        play(adjusted_audio) # <-- TODO: En macOS da error. Corregir 
 
     os.remove(mp3_file)
     os.remove(adjusted_audio_file)
