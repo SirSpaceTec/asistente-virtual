@@ -1,8 +1,15 @@
 import subprocess
 import webbrowser
 import shutil
-import winreg
 import json
+import sys
+
+# Importar winreg solo si se está en Windows
+if sys.platform.startswith("win"):
+    import winreg
+else:
+    winreg = None  # Para tener una referencia en otros sistemas
+
 
 # importaciones para utilizar en el globals()
 from logic.services.init_services import *
@@ -19,6 +26,8 @@ pseudo_commands = data.get("pseudo_commands", {})
 
 # Windows
 def find_program_path(app_name):
+  if winreg is None:
+    return None
   try:
     key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + app_name + ".exe")
     path, _ = winreg.QueryValueEx(key, "")

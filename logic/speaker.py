@@ -2,6 +2,13 @@ from gtts import gTTS
 from pydub import AudioSegment
 from pydub.playback import play
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+PATH_FFMPEG = os.getenv("PATH_FFMPEG")
+
+if PATH_FFMPEG:
+    AudioSegment.converter = PATH_FFMPEG
 
 def change_audio_speed(audio, speed=1.5):
     new_audio = audio._spawn(audio.raw_data, overrides={
@@ -21,7 +28,8 @@ def speak_text(text, lang="es", speed=1.3):
     adjusted_audio_file = "adjusted_response.wav"
     adjusted_audio.export(adjusted_audio_file, format="wav")
 
-    play(adjusted_audio)
+    play_obj = play(adjusted_audio)
+    play_obj.wait_done()
 
     os.remove(mp3_file)
     os.remove(adjusted_audio_file)
