@@ -4,7 +4,7 @@ from logic.command_control import execute_command
 
 wake_words = ["hey asistente", "asistente"]
 
-apagar = ["apagar", "apagar asistente", "apágate"]
+apagar = ["apagar", "apágate"]
 
 def listen_for_wake_word(recognizer, source):
   print("Esperando palabra clave para activación...")
