@@ -26,8 +26,11 @@ pip-delete-this-directory.txt
 *.tmp
 *.out
 *.pid
-*.wav
 *.spec
+
+# Archivos de audio
+*.mp3
+*.wav
 
 # Archivos de test
 .coverage
