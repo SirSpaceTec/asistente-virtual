@@ -1,7 +1,7 @@
 import speech_recognition as sr
 from logic.model_ai import generate_short_response
 from logic.command_control import execute_command
-
+from logic.avatar import avatar_instance 
 wake_words = ["hey asistente", "asistente"]
 
 apagar = ["apagar", "apágate"]
@@ -40,12 +40,15 @@ def input_microphone():
       while True:
         print(f"Di algo...")
         try:
+          
           audio = r.listen(source, timeout=8)
           text = r.recognize_google(audio, language="es-ES")
+          avatar_instance.pensar(duracion=2)
           print(text)
           count = 0
           
           if text.lower() in apagar:
+            avatar_instance.cerrar()
             break
 
           intOrOrd = execute_command(text.lower())
