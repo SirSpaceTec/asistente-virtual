@@ -10,9 +10,9 @@ class AvatarApp:
         self.root.geometry("1024x1024")
         self.root.resizable(False, False)
 
-        self.image1 = ImageTk.PhotoImage(Image.open("avatar_boca_cerrada_1.png"))
-        self.image2 = ImageTk.PhotoImage(Image.open("avatar_boca_abierta_1.png"))
-        self.image_pensando = ImageTk.PhotoImage(Image.open("avatar_pensando_1.png"))
+        self.image1 = ImageTk.PhotoImage(Image.open("avatar_boca_cerrada.png"))
+        self.image2 = ImageTk.PhotoImage(Image.open("avatar_boca_abierta.png"))
+        self.image_pensando = ImageTk.PhotoImage(Image.open("avatar_pensando.png"))
 
 
         self.label = tk.Label(self.root, image=self.image1)
